@@ -1,4 +1,3 @@
-# ProyectoMitadSemestre
 /*
   Analog Input
 
@@ -33,6 +32,8 @@
 // entrada parlante como sensor
 // salida LED
 
+int pinLectura = 1;
+
 // variables para parlante, sensor analogo
 int pinParlante = A0;
 int valorParlante = 0;
@@ -41,10 +42,12 @@ int diferencia = 0;
 int umbral = 3;
 
 // variables para salida LED
-int pinLED = 13;
+int pinLED = 7;
 
 // variable para estado LED
 int estadoLED = 0;
+
+int deteccionSonido = 0;
 
 // variable para pausa de intermitencia
 // const long intervalo = 1000;
@@ -53,11 +56,11 @@ int estadoLED = 0;
 
 void setup() {
 
-  // prender puerto srial
-  Serial.begin(9600);
-
   // declarar pin LED como salida
   pinMode(pinLED, OUTPUT);
+
+  // prender puerto serial
+  Serial.begin(9600);
 
 }
 
@@ -76,13 +79,19 @@ void loop() {
   if (diferencia > umbral) {
 
     Serial.println("distintos");
+
+    deteccionSonido = 1;
   }
 
   else  {
+
+    deteccionSonido = 0;
 
     // Serial.print(valorParlante);
     // Serial.print(", ");
     // Serial.println(valorParlanteAntes);
   }
+
+  digitalWrite(pinLED, deteccionSonido);
 
 }
